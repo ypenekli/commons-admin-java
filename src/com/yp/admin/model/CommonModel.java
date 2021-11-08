@@ -8,6 +8,7 @@ import com.yp.core.AModel;
 import com.yp.core.BaseConstants;
 import com.yp.core.FnParam;
 import com.yp.core.db.DbCommand;
+import com.yp.core.db.Pager;
 import com.yp.core.entity.IResult;
 import com.yp.core.entity.Result;
 import com.yp.core.tools.StringTool;
@@ -17,10 +18,10 @@ public class CommonModel extends AModel<Common> {
 	public static final String Q_COMMONS_PARENT_ID1 = "Q_COMMONS_PARENT_ID1";
 	public static final String Q_COMMONS1 = "Q_COMMONS1";
 
-	public List<Common> findByParent(final Integer pParentId) {
+	public IResult<List<Common>> findByParent(final Integer pParentId, Pager pPager) {
 		final DbCommand query = new DbCommand(Q_COMMONS_PARENT_ID1, new FnParam("parent_id", pParentId));
 		query.setQuery(Constants.getSgl(query.getName()));
-		return this.findAny(query);
+		return this.findAny(query, pPager);
 	}
 
 	public IResult<Common> save(final Common pCommon, final IUser pUser) {
