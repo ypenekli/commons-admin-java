@@ -21,7 +21,7 @@ public class CommonModel extends AModel<Common> {
 	public IResult<List<Common>> findByParent(final Integer pParentId, Pager pPager) {
 		final DbCommand query = new DbCommand(Q_COMMONS_PARENT_ID1, new FnParam("parent_id", pParentId));
 		query.setQuery(Constants.getSgl(query.getName()));
-		return this.findAny(query, pPager);
+		return this.findPageAny(query, pPager);
 	}
 
 	public IResult<Common> save(final Common pCommon, final IUser pUser) {
