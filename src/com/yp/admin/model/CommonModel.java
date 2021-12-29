@@ -16,10 +16,25 @@ import com.yp.core.user.IUser;
 
 public class CommonModel extends AModel<Common> {
 	public static final String Q_COMMONS_PARENT_ID1 = "Q_COMMONS_PARENT_ID1";
+	public static final String Q_COMMONS_NAME1 = "Q_COMMONS_NAME1";
 	public static final String Q_COMMONS1 = "Q_COMMONS1";
 
 	public IResult<List<Common>> findByParent(final Integer pParentId, Pager pPager) {
 		final DbCommand query = new DbCommand(Q_COMMONS_PARENT_ID1, new FnParam("parent_id", pParentId));
+		query.setQuery(Constants.getSgl(query.getName()));
+		return this.findPageAny(query, pPager);
+	}
+
+	public IResult<List<Common>> findByName(final Integer pParentId, final String pName, Pager pPager) {
+		boolean isName = StringTool.isNull(pName);
+
+		final DbCommand query;
+		if (isName) {
+			query = new DbCommand(Q_COMMONS_NAME1, new FnParam("parent_id", pParentId),
+					new FnParam("name", "%" + pName + "%"));
+		} else {
+			query = new DbCommand(Q_COMMONS_PARENT_ID1, new FnParam("parent_id", pParentId));
+		}
 		query.setQuery(Constants.getSgl(query.getName()));
 		return this.findPageAny(query, pPager);
 	}
